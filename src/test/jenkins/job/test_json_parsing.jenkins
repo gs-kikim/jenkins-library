@@ -1,0 +1,12 @@
+@Library('jenkins_library') _
+import org.jenkins.utils.MyResult
+
+node {
+    stage('Use Functions') {
+        // JSON 파일 로드
+        def config = MyResult.load_json_params()
+        echo "Environment: ${config.vm.ip}"
+        echo "Timeout: ${config.vm.memory}"
+
+    }
+}

@@ -1,0 +1,16 @@
+@Library('jenkins_library') _
+
+node {
+    stage('Use Functions') {
+        myFunction('World') // "Hello, World" 출력
+        int result = anotherFunction(5, 3) // 8 반환
+        echo "Result is ${result}"
+
+    }
+    stage('Use Classes') {
+        def result = org.jenkins.utils.MyUtils.makeItUpper('hello')
+        echo result // "HELLO" 출력
+
+    }
+
+}

@@ -1,0 +1,12 @@
+@Library('jenkins_library@master') _
+import org.jenkins.utils.StringValidatorUtil
+
+node {
+    stage('Validate String') {
+//        def inputString = "empty"
+        echo "inputString --> ${inputString} "
+        if (StringValidatorUtil.validateString(inputString)) {
+            echo "입력 문자열이 유효한 형식입니다."
+        }
+    }
+}

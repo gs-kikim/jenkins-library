@@ -1,0 +1,49 @@
+plugins {
+    id("org.jetbrains.intellij") version "1.4.0"
+    id 'groovy'
+    id 'java'
+    id 'maven-publish'
+    id 'java-library'
+}
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+    maven { url 'https://repo.jenkins-ci.org/releases/' }
+}
+
+dependencies {
+    implementation 'org.apache.groovy:groovy:5.0.0-alpha-8'
+    implementation('commons-io:commons-io:2.11.0')
+    implementation('org.apache.ivy:ivy:2.5.0')
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.10.2'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.10.2'
+    /* https://github.com/jenkinsci/JenkinsPipelineUnit/releases */
+    testImplementation "com.lesfurets:jenkins-pipeline-unit:1.20"
+}
+
+
+// See https://github.com/JetBrains/gradle-intellij-plugin/
+intellij {
+    version = '2022.2'
+}
+patchPluginXml {
+    changeNotes = """
+      Add change notes here.<br>
+      <em>most HTML tags may be used</em>"""
+}
+test {
+
+    useJUnitPlatform()
+
+    // Enable writing stacks with -Ppipeline.stack.write
+    if (project.hasProperty("pipeline.stack.write")) {
+        systemProperty "pipeline.stack.write", "true"
+    }
+
+    testLogging {
+        events "PASSED", "FAILED", "SKIPPED"
+    }
+}
